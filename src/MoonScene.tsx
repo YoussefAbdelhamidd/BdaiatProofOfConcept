@@ -77,7 +77,7 @@ function Moon({ reduced, onReady }: { reduced: boolean; onReady: () => void }) {
     const elevation = reduced ? 0 : MathUtils.lerp(from.elevation, to.elevation, progress)
     const distance = reduced ? 6.8 : MathUtils.lerp(from.distance, to.distance, progress)
     // Ease the orbital angle itself so the camera follows an arc, never cuts through it.
-    const ease = 1 - Math.exp(-4 * dt)
+    const ease = reduced ? 1 : 1 - Math.exp(-4 * dt)
     cameraAngle.current = MathUtils.lerp(cameraAngle.current, angle, ease)
     const radius = MathUtils.lerp(Math.hypot(camera.position.x, camera.position.z), distance, ease)
     const height = MathUtils.lerp(camera.position.y, elevation, ease)

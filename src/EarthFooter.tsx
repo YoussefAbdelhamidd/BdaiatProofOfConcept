@@ -44,7 +44,7 @@ export default function EarthFooter({ lang, reduced, note }: { lang: 'en' | 'ar'
     if (!footer.current) return
     const preload = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) { setNear(true); preload.disconnect() }
-    }, { rootMargin: '700px' })
+    }, { rootMargin: '1800px' })
     const visibility = new IntersectionObserver(([entry]) => setActive(entry.isIntersecting))
     preload.observe(footer.current)
     visibility.observe(footer.current)

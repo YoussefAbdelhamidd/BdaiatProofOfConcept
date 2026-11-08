@@ -1,0 +1,9 @@
+:root { font-family:Arial, 'Helvetica Neue', system-ui, sans-serif; color:#eceee7; background:#06080d; font-synthesis:none; text-rendering:optimizeLegibility; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; color-scheme:dark; }
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; }
+html,body,#root { width:100%; min-height:100%; }
+a { color:inherit; text-decoration:none; }
+button { font:inherit; cursor:pointer; }
+button:focus-visible,a:focus-visible { outline:2px solid #d7ee9b; outline-offset:6px; }
+::selection { background:#d7ee9b; color:#152017; }

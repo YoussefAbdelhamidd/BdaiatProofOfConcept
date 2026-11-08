@@ -1,0 +1,12 @@
+.moon-preview { position: relative; height: 100svh; min-height: 440px; background: #080b12; }
+.preview-heading { position: absolute; z-index: 1; top: clamp(24px, 5vw, 64px); left: clamp(24px, 5vw, 72px); pointer-events: none; }
+.preview-heading span { color: #9ba7ba; font-size: 11px; letter-spacing: .2em; }
+.preview-heading h1 { margin: 12px 0 0; font-size: clamp(22px, 3vw, 40px); font-weight: 400; letter-spacing: -.04em; }
+.preview-controls { position: absolute; bottom: 32px; left: 24px; right: 24px; display: flex; align-items: center; justify-content: center; gap: 24px; }
+.preview-controls p { color: #9ba7ba; font-size: 13px; margin: 0; }
+button { border: 1px solid #394355; background: #111824; color: #edf1f7; padding: 11px 18px; border-radius: 24px; cursor: pointer; font: inherit; font-size: 13px; }
+button:hover { background: #202b3d; }
+button:focus-visible { outline: 2px solid #a8c8ff; outline-offset: 4px; }
+.loading-moon { white-space: nowrap; color: #c5cfdf; font-size: 14px; }
+.scene-error { position: absolute; inset: 0; display: grid; place-content: center; gap: 16px; padding: 24px; }
+@media (max-width: 600px) { .preview-controls { flex-direction: column; gap: 12px; bottom: 24px; } }

@@ -1,10 +1,12 @@
 import { Component, Suspense, useEffect, useRef } from 'react'
-import type { ReactNode } from 'react'
+import type { ReactNode, RefObject } from 'react'
+import FooterModels from './FooterModels'
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { MathUtils, Vector3 } from 'three'
 import type { Group } from 'three'
-import moonUrl from './assets/moon-mobile-webp.glb?url'
+import moonUrl from './assets/moon-mobile-smooth-webp.glb?url'
+import { usePlanetResolution } from './usePlanetResolution'
 
 // Camera viewpoints follow the introduction and four content chapters.
 const viewpoints = [
@@ -113,11 +115,13 @@ class SceneBoundary extends Component<{ children: ReactNode; onError: () => void
   render() { return this.state.failed ? <div className="fallback-moon" /> : this.props.children }
 }
 
-export default function MoonScene({ reduced, onReady, onError }: { reduced: boolean; onReady: () => void; onError: () => void }) {
-  return <SceneBoundary onError={onError}><Canvas frameloop="demand" dpr={[1, window.innerWidth < 768 ? 1 : 1.25]} camera={{ position: [0, 0, 6.8], fov: 43 }} gl={{ alpha: true, antialias: false, powerPreference: 'low-power' }} fallback={<div className="fallback-moon" />}>
+export default function MoonScene({ reduced, onReady, onError, eventSource }: { reduced: boolean; onReady: () => void; onError: () => void; eventSource: RefObject<HTMLElement | null> }) {
+  const dpr = usePlanetResolution()
+  return <SceneBoundary onError={onError}><Canvas eventSource={eventSource} eventPrefix="client" frameloop="demand" dpr={dpr} camera={{ position: [0, 0, 6.8], fov: 43 }} gl={{ alpha: true, antialias: true, powerPreference: 'low-power' }} fallback={<div className="fallback-moon" />}>
     <ambientLight intensity={0.3} />
     <directionalLight position={[-4, 3, 5]} intensity={3.1} color="#fff5e7" />
     <directionalLight position={[3, -1, -4]} intensity={0.45} color="#b1c6f6" />
     <Suspense fallback={null}><Moon reduced={reduced} onReady={onReady} /></Suspense>
+    <FooterModels reduced={reduced} />
   </Canvas></SceneBoundary>
 }

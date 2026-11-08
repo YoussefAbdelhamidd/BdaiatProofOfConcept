@@ -58,6 +58,15 @@ function App() {
       const h = window.innerHeight
       root.current?.style.setProperty('--hero-opacity', String(Math.max(0, 1 - window.scrollY / (h * 0.65))))
       const chapters = root.current?.querySelectorAll<HTMLElement>('.chapter')
+      const footerTop = root.current?.querySelector('.earth-footer')?.getBoundingClientRect().top ?? Infinity
+      const footerFade = Math.min(1, Math.max(0, (footerTop - h * 0.65) / (h * 0.3)))
+      const footerReached = footerTop < h * 0.85
+      root.current?.toggleAttribute('data-footer-active', footerReached)
+      const navigation = root.current?.querySelector<HTMLElement>('.navbar')
+      if (navigation) {
+        navigation.inert = footerReached
+        navigation.setAttribute('aria-hidden', String(footerReached))
+      }
       let current = 0
       chapters?.forEach((chapter, index) => {
         const rect = chapter.getBoundingClientRect()
@@ -70,7 +79,12 @@ function App() {
         panel?.style.setProperty('--x', `${reduced ? offset : offset * ease}px`)
         panel?.style.setProperty('--y', `${reduced ? 0 : (1 - ease) * 130}px`)
         panel?.style.setProperty('--scale', String(reduced ? 1 : 0.72 + ease * 0.28))
-        panel?.style.setProperty('--opacity', String(reduced ? exit : Math.min(1, p * 3) * exit))
+        const opacity = (reduced ? exit : Math.min(1, p * 3) * exit) * footerFade
+        panel?.style.setProperty('--opacity', String(opacity))
+        if (panel) {
+          panel.style.visibility = opacity > 0.01 ? 'visible' : 'hidden'
+          panel.inert = opacity <= 0.01
+        }
         chapter.style.zIndex = mobile || reduced || p > 0.58 ? '3' : '1'
         if (rect.top < h * 0.65) current = index
       })
@@ -93,7 +107,7 @@ function App() {
     </div>
     <main inert={!ready} aria-busy={!ready} ref={root} className={`cosmos ${reduced ? 'reduced-motion' : ''}`}>
     <div className="starfield" aria-hidden="true" />
-    <div className="moon-stage" aria-hidden="true">{staticView ? <div className="fallback-moon" /> : <MoonLoadBoundary onError={markError}><Suspense fallback={null}><MoonScene reduced={reduced} onReady={markReady} onError={markError} /></Suspense></MoonLoadBoundary>}</div>
+    <div className="moon-stage" aria-hidden="true">{staticView ? <div className="fallback-moon" /> : <MoonLoadBoundary onError={markError}><Suspense fallback={null}><MoonScene reduced={reduced} onReady={markReady} onError={markError} eventSource={root} /></Suspense></MoonLoadBoundary>}</div>
     <header className="navbar">
       <a className="brand" href="#home" aria-label={lang === 'ar' ? 'بدايات — الرئيسية' : 'Bdaiat — Home'}><img src={`${import.meta.env.BASE_URL}logo${lang === 'ar' ? 'Ar' : 'En'}.svg`} alt={lang === 'ar' ? 'بدايات' : 'Bdaiat'} width="143" height="32" /></a>
       <nav aria-label={lang === 'ar' ? 'التنقل الرئيسي' : 'Main navigation'}>{t.nav.map((name, i) => <a key={ids[i]} href={`#${ids[i]}`} className={active === i ? 'current' : ''}>{name}</a>)}</nav>

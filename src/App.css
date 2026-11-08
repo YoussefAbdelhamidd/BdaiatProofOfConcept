@@ -59,3 +59,29 @@ dialog { border:1px solid #ffffff25; padding:44px; background:#101722; color:#e8
 .footer-meta { position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; padding:22px 4.5vw; gap:20px; background:transparent; border:0; font-size:9px; letter-spacing:.1em; color:#8d99aa; }
 @media(max-width:759px) { .earth-footer-heading { padding:56px 24px 0; }.earth-footer-heading .eyebrow { font-size:8px; }.footer-earth { height:280px; }.footer-meta { padding:22px 22px 100px; font-size:8px; } }
 
+
+.footer-logo-interactive { position:relative; z-index:3; margin:8px auto 0; width:min(640px,calc(100% - 32px)); }
+.footer-logo-stage { height:180px; touch-action:none; cursor:grab; opacity:0; transition:opacity .5s ease; border-radius:12px; }
+.footer-logo-stage.is-visible { opacity:1; }
+.footer-logo-stage:focus-visible { outline:1px solid #d7ee9b88; outline-offset:3px; }
+.footer-logo-controls { display:flex; align-items:center; justify-content:center; gap:8px; padding:0 12px 12px; }
+.footer-logo-controls>span { color:#8c97a7; font-size:10px; margin-inline-end:10px; }
+.footer-logo-controls button { background:#0d1520b8; border:1px solid #ffffff24; color:#b9c4d2; border-radius:20px; padding:7px 13px; font-size:10px; }
+.footer-logo-controls button[aria-pressed=true] { border-color:#d7ee9b77; color:#d7ee9b; }
+.footer-logo-fallback { position:absolute; inset:0; margin:auto; width:70%; max-height:100px; }
+@media(max-width:759px) { .footer-logo-stage { height:150px; }.footer-logo-controls { flex-wrap:wrap; }.footer-logo-controls>span { font-size:9px; } }
+
+.footer-logo-interactive { margin-top:56px; }
+.earth-footer-heading { padding-top:18px; }
+@media(max-width:759px) { .footer-logo-interactive { margin-top:38px; }.earth-footer-heading { padding-top:12px; } }
+
+/* Shared full-screen WebGL scene; footer elements only reserve layout positions. */
+.shared-logo-anchor { opacity:1; overflow:visible; }
+.footer-earth { pointer-events:none; }
+
+/* Animate children so the mobile fixed bottom nav retains its viewport positioning. */
+.navbar { transition:opacity .4s ease; }
+.navbar .brand,.navbar .lang-switch,.navbar nav { transition:transform .45s cubic-bezier(.22,1,.36,1),opacity .35s ease; }
+.cosmos[data-footer-active] .navbar { opacity:0; pointer-events:none; }
+.cosmos[data-footer-active] .navbar .brand,.cosmos[data-footer-active] .navbar .lang-switch,.cosmos[data-footer-active] .navbar nav { transform:translateY(-110px); opacity:0; }
+@media(max-width:759px) { .cosmos[data-footer-active] .navbar nav { transform:translateY(calc(100% + 30px)); } }

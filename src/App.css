@@ -31,3 +31,31 @@ dialog { border:1px solid #ffffff25; padding:44px; background:#101722; color:#e8
 @media(max-width:900px) { .navbar nav { gap:18px; }.navbar { gap:20px; }.coordinate { display:none; }.orbit-panel { width:320px; padding:28px; }.work-panel { padding:0; }.orbital-label { left:77%; } }
 @media(max-width:759px) { .navbar { height:78px; padding:0 22px; }.brand img { width:108px; }.navbar nav { position:fixed; bottom:18px; left:16px; right:16px; justify-content:space-around; gap:8px; background:#111821f5; border:1px solid #ffffff20; border-radius:30px; padding:16px 12px; }.navbar nav a { font-size:10px; }.lang-switch { padding:8px 12px; gap:10px; }.hero { min-height:650px; }.hero-copy { inset:21% 22px auto; }h1 { font-size:clamp(54px,11.4vw,85px); }.hero-copy .eyebrow { font-size:8px; letter-spacing:.1em; }.hero-bottom { inset-inline:22px; bottom:15vh; align-items:flex-start; flex-direction:column; gap:22px; }.hero-bottom>p { font-size:12px; max-width:230px; }.orbital-label { left:auto; right:18px; top:52%; font-size:8px; }.chapter { height:125svh; }.orbit-panel { top:24vh; width:340px; background:#0b0f17fa; }.contact-panel { background:#d7ee9b; }.work-panel { top:17vh; }.page-rail { display:none; }.site-footer { padding:24px 22px 100px; font-size:8px; gap:18px; }.contact-chapter { height:115svh; }[dir=rtl] h1 { font-size:clamp(54px,11.5vw,85px); } }
 @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; }* { transition:none!important; }.orbit-panel { transform:translate(var(--x),0)!important; } }
+
+/* Cover the entire page until the textured moon has completed its first frame. */
+.launch-loader { position:fixed; inset:0; z-index:100; background:#06080d; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:28px; opacity:1; visibility:visible; transition:opacity .6s ease,visibility .6s; text-align:center; }
+.launch-loader.is-ready { opacity:0; visibility:hidden; pointer-events:none; }
+.loader-logo { position:absolute; top:34px; inset-inline-start:4.5vw; width:127px; height:32px; }
+.loader-orbit { width:94px; height:94px; border:1px solid #ffffff15; border-radius:50%; position:relative; margin-bottom:35px; animation:loader-spin 5s linear infinite; }
+.loader-orbit:before { content:''; position:absolute; inset:25px; border-radius:50%; background:radial-gradient(circle at 30% 30%,#aeb3b0,#424c50 65%,#17202b); }
+.loader-orbit span { position:absolute; width:6px; height:6px; left:50%; top:-3px; border-radius:50%; background:#d7ee9b; }
+.loader-title { color:#eceee7; font-size:20px; letter-spacing:-.02em; margin:0 0 12px; }
+.loader-caption { color:#7f899b; font-size:12px; line-height:1.8; margin:0; }
+.loader-actions { display:flex; gap:12px; margin-top:26px; }
+.loader-actions button { background:#152017; border:1px solid #d7ee9b66; padding:12px 22px; color:#d7ee9b; border-radius:24px; }
+@keyframes loader-spin { to { transform:rotate(360deg); } }
+@media(prefers-reduced-motion:reduce) { .loader-orbit { animation:none; }.launch-loader { transition:none; } }
+
+.earth-footer { position:relative; z-index:4; background:transparent; border:0; overflow:hidden; }
+.earth-footer-heading { position:relative; z-index:2; text-align:center; padding:76px 24px 0; }
+.earth-footer-heading .eyebrow { justify-content:center; margin-bottom:18px; }
+.earth-footer-heading h2 { font-size:clamp(30px,4.5vw,66px); margin:0 0 24px; }
+.earth-footer-heading>a { color:#9eacbb; font-size:11px; }
+.footer-earth { height:clamp(300px,36vw,460px); position:relative; overflow:hidden; margin-top:20px; pointer-events:none; }
+.earth-canvas { position:absolute; inset:0 0 auto; height:200%; opacity:0; transition:opacity .7s; }
+.earth-canvas.is-ready { opacity:1; }
+.earth-static { position:absolute; width:min(900px,125vw); aspect-ratio:1; left:50%; top:22%; transform:translateX(-50%); border-radius:50%; background:radial-gradient(circle at 35% 20%,#193f54,#0a2335 45%,#060d17 72%); transition:opacity .7s; }
+.earth-static.is-hidden { opacity:0; }
+.footer-meta { position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; padding:22px 4.5vw; gap:20px; background:transparent; border:0; font-size:9px; letter-spacing:.1em; color:#8d99aa; }
+@media(max-width:759px) { .earth-footer-heading { padding:56px 24px 0; }.earth-footer-heading .eyebrow { font-size:8px; }.footer-earth { height:280px; }.footer-meta { padding:22px 22px 100px; font-size:8px; } }
+

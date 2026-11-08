@@ -79,9 +79,3 @@ dialog { border:1px solid #ffffff25; padding:44px; background:#101722; color:#e8
 .shared-logo-anchor { opacity:1; overflow:visible; }
 .footer-earth { pointer-events:none; }
 
-/* Animate children so the mobile fixed bottom nav retains its viewport positioning. */
-.navbar { transition:opacity .4s ease; }
-.navbar .brand,.navbar .lang-switch,.navbar nav { transition:transform .45s cubic-bezier(.22,1,.36,1),opacity .35s ease; }
-.cosmos[data-footer-active] .navbar { opacity:0; pointer-events:none; }
-.cosmos[data-footer-active] .navbar .brand,.cosmos[data-footer-active] .navbar .lang-switch,.cosmos[data-footer-active] .navbar nav { transform:translateY(-110px); opacity:0; }
-@media(max-width:759px) { .cosmos[data-footer-active] .navbar nav { transform:translateY(calc(100% + 30px)); } }

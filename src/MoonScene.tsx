@@ -108,6 +108,27 @@ function Moon({ reduced, onReady }: { reduced: boolean; onReady: () => void }) {
   return <group ref={group} scale={Math.min(0.8, size.width / size.height * 0.9)}><primitive object={scene} /></group>
 }
 
+// Render each lighting layer separately while sharing depth, so footer lights
+// cannot brighten the Moon and orbiting objects still occlude correctly.
+function SceneLighting() {
+  useFrame(({ gl, scene, camera }) => {
+    const originalMask = camera.layers.mask
+    const originalAutoClear = gl.autoClear
+    try {
+      camera.layers.set(0)
+      gl.autoClear = true
+      gl.render(scene, camera)
+      camera.layers.set(1)
+      gl.autoClear = false
+      gl.render(scene, camera)
+    } finally {
+      camera.layers.mask = originalMask
+      gl.autoClear = originalAutoClear
+    }
+  }, 1)
+  return null
+}
+
 class SceneBoundary extends Component<{ children: ReactNode; onError: () => void }, { failed: boolean }> {
   state = { failed: false }
   static getDerivedStateFromError() { return { failed: true } }
@@ -123,5 +144,6 @@ export default function MoonScene({ reduced, onReady, onError, eventSource }: { 
     <directionalLight position={[3, -1, -4]} intensity={0.45} color="#b1c6f6" />
     <Suspense fallback={null}><Moon reduced={reduced} onReady={onReady} /></Suspense>
     <FooterModels reduced={reduced} />
+    <SceneLighting />
   </Canvas></SceneBoundary>
 }

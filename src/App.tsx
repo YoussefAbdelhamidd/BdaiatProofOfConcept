@@ -60,13 +60,6 @@ function App() {
       const chapters = root.current?.querySelectorAll<HTMLElement>('.chapter')
       const footerTop = root.current?.querySelector('.earth-footer')?.getBoundingClientRect().top ?? Infinity
       const footerFade = Math.min(1, Math.max(0, (footerTop - h * 0.65) / (h * 0.3)))
-      const footerReached = footerTop < h * 0.85
-      root.current?.toggleAttribute('data-footer-active', footerReached)
-      const navigation = root.current?.querySelector<HTMLElement>('.navbar')
-      if (navigation) {
-        navigation.inert = footerReached
-        navigation.setAttribute('aria-hidden', String(footerReached))
-      }
       let current = 0
       chapters?.forEach((chapter, index) => {
         const rect = chapter.getBoundingClientRect()

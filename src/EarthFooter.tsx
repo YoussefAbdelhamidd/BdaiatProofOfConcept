@@ -3,7 +3,7 @@ export default function EarthFooter({ lang, note }: { lang: 'en' | 'ar'; reduced
   return <footer className="earth-footer">
     <div className="footer-logo-interactive">
       <div className="footer-logo-stage shared-logo-anchor" tabIndex={0} role="group"
-        aria-label={ar ? 'شعار ثلاثي الأبعاد يدور تلقائياً. اسحب أو استخدم الأسهم للتحريك.' : 'Rotating 3D logo. Drag or use arrow keys to move. Press R to reset.'}
+        aria-label={ar ? 'شعار ثلاثي الأبعاد يدور حول الأرض. اسحبه ثم اتركه ليعود إلى مداره، أو استخدم الأسهم للتحريك.' : '3D logo orbiting Earth. Drag and release to return to orbit, or use arrow keys to move. Press R to reset.'}
         onKeyDown={event => {
           const direction = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, 1], ArrowDown: [0, -1] }[event.key]
           const reset = event.key.toLowerCase() === 'r'

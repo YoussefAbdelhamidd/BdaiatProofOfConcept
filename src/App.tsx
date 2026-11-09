@@ -1,5 +1,6 @@
 import { Component, lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
+import { useSmoothScroll } from './useSmoothScroll'
 import './App.css'
 
 const MoonScene = lazy(() => import('./MoonScene'))
@@ -36,6 +37,7 @@ function App() {
   }, [loadStatus, markError])
   const [lang, setLang] = useState<'en' | 'ar'>(() => localStorage.getItem('bdaiat-lang') === 'ar' ? 'ar' : 'en')
   const [reduced, setReduced] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  useSmoothScroll(ready && !reduced)
   const [active, setActive] = useState(0)
   const root = useRef<HTMLElement>(null)
   const t = copy[lang]
